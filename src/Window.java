@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Window extends JFrame {
+class Window extends JFrame {
     //Result
     private JLabel labelResult = new JLabel("Entre ton calcule !");
     //Button Number
@@ -27,6 +27,7 @@ public class Window extends JFrame {
     private JButton butMult = new JButton("X");
     private JButton butDiv = new JButton("/");
     private JButton butResult = new JButton("=");
+    //Settings
     private String numberWrite = "";
     private Double calc1 = 0.0;
     private Double resultT = 0.0;
@@ -34,10 +35,8 @@ public class Window extends JFrame {
     private boolean operationChoose = false;
     private boolean wantResult = false;
     private boolean error = false;
-    private boolean resultSet = false;
 
-
-    public Window() {
+    Window() {
         this.setTitle("Calculette");
         this.setSize(350, 400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,7 +44,7 @@ public class Window extends JFrame {
 
         //Style des Button et Label
 
-        Font police = new Font("Kefa", Font.CENTER_BASELINE, 22);
+        Font police = new Font("Kefa", Font.BOLD, 22);
         Color redReset = new Color(222,39,89);
         labelResult.setFont(police);but1.setFont(police);but2.setFont(police);but3.setFont(police);but4.setFont(police);but5.setFont(police);but6.setFont(police);but7.setFont(police);but8.setFont(police);but9.setFont(police);but0.setFont(police);butSub.setFont(police);butSum.setFont(police);butDiv.setFont(police);butReset.setFont(police);butResult.setFont(police);butPoint.setFont(police);
         butReset.setForeground(redReset);
@@ -179,7 +178,6 @@ public class Window extends JFrame {
     class ButtonOperation implements ActionListener{
         public void actionPerformed(ActionEvent event) {
             if (!wantResult) {
-            System.out.println(wantResult);
                 Double calc2 = 0.0;
                 try {
                     calc2 = Double.parseDouble(numberWrite);
@@ -255,10 +253,7 @@ public class Window extends JFrame {
                 Double calc2 = 0.0;
                 try {
                     calc2 = Double.parseDouble(numberWrite);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    numberWrite = "0.0";
-                } catch (NullPointerException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
                     numberWrite = "0.0";
                 }
