@@ -41,6 +41,7 @@ class Window extends JFrame {
         this.setSize(350, 400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         //Style des Button et Label
 
@@ -52,7 +53,7 @@ class Window extends JFrame {
         Border border = BorderFactory.createLineBorder(colorBorder, 3);
         labelResult.setBorder(border);
         labelResult.setPreferredSize(new Dimension(300,50));
-        labelResult.setHorizontalAlignment(JLabel.CENTER);
+        labelResult.setHorizontalAlignment(JLabel.RIGHT);
 
         //Mise en place du result
 
