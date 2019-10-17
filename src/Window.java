@@ -6,37 +6,35 @@ import java.awt.event.ActionListener;
 
 public class Window extends JFrame {
     //Result
-    public JLabel labelResult = new JLabel("ABC");
+    private JLabel labelResult = new JLabel("Entre ton calcule !");
     //Button Number
-    public JButton but0 = new JButton("0");
-    public JButton but1 = new JButton("1");
-    public JButton but2 = new JButton("2");
-    public JButton but3 = new JButton("3");
-    public JButton but4 = new JButton("4");
-    public JButton but5 = new JButton("5");
-    public JButton but6 = new JButton("6");
-    public JButton but7 = new JButton("7");
-    public JButton but8 = new JButton("8");
-    public JButton but9 = new JButton("9");
+    private JButton but0 = new JButton("0");
+    private JButton but1 = new JButton("1");
+    private JButton but2 = new JButton("2");
+    private JButton but3 = new JButton("3");
+    private JButton but4 = new JButton("4");
+    private JButton but5 = new JButton("5");
+    private JButton but6 = new JButton("6");
+    private JButton but7 = new JButton("7");
+    private JButton but8 = new JButton("8");
+    private JButton but9 = new JButton("9");
     //Button other
-    public JButton butPoint = new JButton(".");
-    public JButton butReset = new JButton("C");
+    private JButton butPoint = new JButton(".");
+    private JButton butReset = new JButton("C");
     //Button operation
-    public JButton butSum = new JButton("+");
-    public JButton butSub = new JButton("-");
-    public JButton butMult = new JButton("X");
-    public JButton butDiv = new JButton("/");
-    public JButton butResult = new JButton("=");
-    //Settings
-    public JPanel contain = new JPanel();
-    public String numberWrite = "";
-    public Double calc1 = 0.0;
-    public Double resultT = 0.0;
-    public Operation operation = Operation.DEFAULT;
-    public boolean operationChoose = false;
-    public boolean wantResult = false;
-    public boolean error = false;
-    public boolean resultSet = false;
+    private JButton butSum = new JButton("+");
+    private JButton butSub = new JButton("-");
+    private JButton butMult = new JButton("X");
+    private JButton butDiv = new JButton("/");
+    private JButton butResult = new JButton("=");
+    private String numberWrite = "";
+    private Double calc1 = 0.0;
+    private Double resultT = 0.0;
+    private Operation operation = Operation.DEFAULT;
+    private boolean operationChoose = false;
+    private boolean wantResult = false;
+    private boolean error = false;
+    private boolean resultSet = false;
 
 
     public Window() {
@@ -59,6 +57,8 @@ public class Window extends JFrame {
 
         //Mise en place du result
 
+        //Settings
+        JPanel contain = new JPanel();
         contain.setLayout(new BorderLayout());
         contain.add(labelResult, BorderLayout.NORTH);
 
@@ -98,17 +98,17 @@ public class Window extends JFrame {
         contain.add(containOperation, BorderLayout.EAST);
 
         //Mise en place des variables
-        but0.addActionListener(new ButtonNubmer());
-        but1.addActionListener(new ButtonNubmer());
-        but2.addActionListener(new ButtonNubmer());
-        but3.addActionListener(new ButtonNubmer());
-        but4.addActionListener(new ButtonNubmer());
-        but5.addActionListener(new ButtonNubmer());
-        but6.addActionListener(new ButtonNubmer());
-        but7.addActionListener(new ButtonNubmer());
-        but8.addActionListener(new ButtonNubmer());
-        but9.addActionListener(new ButtonNubmer());
-        butPoint.addActionListener(new ButtonNubmer());
+        but0.addActionListener(new ButtonNumber());
+        but1.addActionListener(new ButtonNumber());
+        but2.addActionListener(new ButtonNumber());
+        but3.addActionListener(new ButtonNumber());
+        but4.addActionListener(new ButtonNumber());
+        but5.addActionListener(new ButtonNumber());
+        but6.addActionListener(new ButtonNumber());
+        but7.addActionListener(new ButtonNumber());
+        but8.addActionListener(new ButtonNumber());
+        but9.addActionListener(new ButtonNumber());
+        butPoint.addActionListener(new ButtonNumber());
 
         butSum.addActionListener(new ButtonOperation());
         butDiv.addActionListener(new ButtonOperation());
@@ -125,18 +125,17 @@ public class Window extends JFrame {
 
 
     }
-    class ButtonNubmer implements ActionListener{
+    class ButtonNumber implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent event) {
             if (operationChoose) {
                 numberWrite = "";
                 operationChoose = false;
             }
-            if (numberWrite == "0") {
+            if (numberWrite.equals("0")) {
                 numberWrite = "";
             }
             if (numberWrite.length() < 16 && !wantResult) {
-                System.out.println("Passed");
                 if (event.getSource() == but0) {
                     numberWrite += 0;
                 }
@@ -171,7 +170,7 @@ public class Window extends JFrame {
                     numberWrite += ".";
                 }
             }
-            if (numberWrite != "Error") {
+            if (!numberWrite.equals("Error")) {
                 labelResult.setText(numberWrite);
             }
             System.out.println(numberWrite);
@@ -180,17 +179,16 @@ public class Window extends JFrame {
     class ButtonOperation implements ActionListener{
         public void actionPerformed(ActionEvent event) {
             if (!wantResult) {
+            System.out.println(wantResult);
                 Double calc2 = 0.0;
                 try {
                     calc2 = Double.parseDouble(numberWrite);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    numberWrite = "0.0";
-                } catch (NullPointerException e) {
+                } catch (NumberFormatException | NullPointerException e) {
                     e.printStackTrace();
                     numberWrite = "0.0";
                 }
-                if (calc1 != 0.0) {
+                if (calc1 != 0.0 && calc2 != 0.0) {
+
                     if (operation == Operation.ADD) {
                         resultT = calc1 + calc2;
                     }
@@ -281,7 +279,7 @@ public class Window extends JFrame {
                     }else {
                         resultT = 0.0;
                         error = true;
-                        labelResult.setText("0");
+                        labelResult.setText("Error");
                         calc1 = 0.0;
                         numberWrite = "";
                         System.out.println("error");
@@ -298,7 +296,4 @@ public class Window extends JFrame {
             }
         }
     }
-
-
-
 }
