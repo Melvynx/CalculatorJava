@@ -9,6 +9,7 @@ class Window extends JFrame {
     private JPanel contain = new JPanel();
     private String[] buttonPanels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "="};
     private String[] buttonColumns = {"C", "+", "-", "X", "/"};
+    private Font appFont = new Font("Kefa", Font.BOLD, 22);
 
     private String currentNumber = "";
     private Double currentResult = 0.0;
@@ -39,10 +40,9 @@ class Window extends JFrame {
     }
 
     private void initLabel() {
-        Font police = new Font("Kefa", Font.BOLD, 22);
         Color colorBorder = new Color(76,58,86);
         Border border = BorderFactory.createLineBorder(colorBorder, 3);
-        labelResult.setFont(police);
+        labelResult.setFont(appFont);
         labelResult.setBorder(border);
         labelResult.setPreferredSize(new Dimension(300,50));
         labelResult.setHorizontalAlignment(JLabel.RIGHT);
@@ -50,7 +50,6 @@ class Window extends JFrame {
 
     private void initButtonPanel() {
         GridLayout gridLayoutNumber = new GridLayout(4,3);
-        Font police = new Font("Kefa", Font.BOLD, 22);
         JPanel containNumber = new JPanel();
 
         gridLayoutNumber.setHgap(5);
@@ -60,7 +59,7 @@ class Window extends JFrame {
         for (String buttonPanel : buttonPanels) {
             JButton button = new JButton(buttonPanel);
             containNumber.add(button);
-            button.setFont(police);
+            button.setFont(appFont);
             button.addActionListener(new EventNumbers());
         }
 
@@ -69,7 +68,6 @@ class Window extends JFrame {
 
     private void initButtonColumn() {
         GridLayout gridLayoutOperation = new GridLayout(5,1);
-        Font police = new Font("Kefa", Font.BOLD, 22);
         JPanel containOperation = new JPanel();
 
         gridLayoutOperation.setHgap(5);
@@ -80,7 +78,7 @@ class Window extends JFrame {
             JButton button = new JButton(buttonColumn);
             containOperation.add(button);
             button.addActionListener(new EventColumns());
-            button.setFont(police);
+            button.setFont(appFont);
         }
 
         contain.add(containOperation, BorderLayout.EAST);
@@ -148,17 +146,19 @@ class Window extends JFrame {
         wantResult = false;
         String sourceText = event.getActionCommand();
 
-        if (sourceText.equals("+")) {
-            operation = Operation.ADD;
-        }
-        if (sourceText.equals("-")) {
-            operation = Operation.SOUS;
-        }
-        if (sourceText.equals("X")) {
-            operation = Operation.MULT;
-        }
-        if (sourceText.equals("/")) {
-            operation = Operation.DIV;
+        switch (sourceText){
+            case "+":
+                operation = Operation.ADD;
+                break;
+            case "-":
+                operation = Operation.SOUS;
+                break;
+            case "X":
+                operation = Operation.MULT;
+                break;
+            case "/":
+                operation = Operation.DIV;
+                break;
         }
 
         if (!operationChoose) {
@@ -178,24 +178,27 @@ class Window extends JFrame {
         }
         if (currentResult != 0.0 && calc2 != 0.0) {
 
-            if (operation == Operation.ADD) {
-                result = currentResult + calc2;
+            switch (operation) {
+                case ADD:
+                    result = currentResult + calc2;
+                    break;
+                case SOUS:
+                    result = currentResult - calc2;
+                    break;
+                case MULT:
+                    result = currentResult * calc2;
+                    break;
+                case DIV:
+                    if (calc2 != 0) {
+                        result = currentResult / calc2;
+                    }else {
+                        result = 0.0;
+                        error = true;
+                        labelResult.setText("Error");
+                    }
+                    break;
             }
-            if (operation == Operation.SOUS) {
-                result = currentResult - calc2;
-            }
-            if (operation == Operation.MULT) {
-                result = currentResult * calc2;
-            }
-            if (operation == Operation.DIV) {
-                if (calc2 != 0) {
-                    result = currentResult / calc2;
-                }else {
-                    result = 0.0;
-                    error = true;
-                    labelResult.setText("Error");
-                }
-            }
+
             if (!error) {
                 System.out.println("---ON OPERATION---");
                 System.out.println("Cal1 : " + currentResult + "\n Operation :" + operation + "\n Cal2 :" + calc2 + "\n Result :" + result);
