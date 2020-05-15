@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 class Window extends JFrame {
     private JLabel labelResult = new JLabel("Entre ton calcule !");
     private JPanel contain = new JPanel();
-    private String[] buttonPanels = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "="};
+    private String[] buttonPanels = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "="};
     private String[] buttonColumns = {"C", "+", "-", "X", "/"};
 
     private String currentNumber = "";
