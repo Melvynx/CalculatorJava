@@ -1,3 +1,3 @@
-# CalculetteJava 
+# Java Calculator 
 
-Very small project to learn logic in Java.
+Project was mad in the course of [Openclassroom Java](https://openclassrooms.com/fr/courses/6173501-debutez-la-programmation-avec-java).
